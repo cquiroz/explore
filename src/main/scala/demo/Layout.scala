@@ -1,8 +1,12 @@
-package react.semanticui.demo
+package demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
+import react.semanticui.modules.sidebar._
+import react.semanticui.elements.segment._
+import react.semanticui.collections.menu._
+// import react.semanticui.As
 
 object Layout {
   final case class Props(c: RouterCtl[Page], r: Resolution[Page])
@@ -12,41 +16,37 @@ object Layout {
       .builder[Props]("Demo")
       .render_P { p =>
         <.div(
-          ^.cls := "app",
-          <.div(
-            ^.cls := "appmenu",
-            ^.cls := "ui inverted vertical left fixed menu",
-            <.div(
-              ^.cls := "item",
-              <.img(
-                ^.cls := "ui mini right spaced image",
+          ^.cls := "theme dimmable",
+          Menu(Menu.props(
+                 attached = MenuAttached.Top
+               ),
+               Menu.Item(Menu.Item.props(as = "a"), Icons.BarsIcon, "Menu")),
+          Sidebar.Pushable(
+            Sidebar.Pushable.props(),
+            Segment(
+              Segment.props(basic = true),
+              Sidebar(
+                Sidebar.props(
+                  width     = SidebarWidth.Thin,
+                  animation = SidebarAnimation.Push,
+                  direction = SidebarDirection.Left,
+                  visible   = false
+                ),
+                Menu(Menu.props(
+                       inverted = true,
+                       vertical = true,
+                       icon     = MenuIcon.Labeled
+                     ),
+                     Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "Home"))
               ),
-              <.strong(
-                "ScalaJS SUI React ",
-                <.small(
-                  <.em("0.0.1")
-                )
-              )
-            ),
-            <.div(
-              ^.cls := "item",
-              <.div(
-                ^.cls := "header",
-                "Elements"
-              ),
-              <.div(
-                ^.cls := "menu",
-                p.c.link(ElementPage(IconsElement))("Icons", ^.cls := "item")
-              ),
-              <.div(
-                ^.cls := "menu",
-                p.c.link(ElementPage(LabelsElement))("Labels", ^.cls := "item")
+              Sidebar.Pusher(
+                Sidebar.Pusher.props(),
+                Segment(
+                  Segment.props(basic = true),
+                  <.h3("Application Content"),
+                  <.img(^.src := "https://react.semantic-ui.com/images/wireframe/paragraph.png"))
               )
             )
-          ),
-          <.div(
-            ^.cls := "body",
-            p.r.render()
           )
         )
       }

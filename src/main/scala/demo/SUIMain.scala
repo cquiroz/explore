@@ -1,9 +1,11 @@
-package react.semanticui.demo
+package demo
 
 import org.scalajs.dom
 import scala.scalajs.js
 import js.annotation._
-import japgolly.scalajs.react._, vdom.all._, extra.router._
+import japgolly.scalajs.react._
+import vdom.all._
+import extra.router._
 
 @JSExportTopLevel("OT")
 object OTMain {

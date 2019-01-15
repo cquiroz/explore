@@ -1,4 +1,4 @@
-package react.semanticui.demo
+package demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
@@ -14,7 +14,7 @@ object HomeComponent {
           <.div(
             ^.cls := "ui basic center aligned segment",
             <.img(
-              ^.cls :="ui small centered image"
+              ^.cls := "ui small centered image"
             ),
             <.h1(
               ^.cls := "ui center aligned header",
@@ -23,9 +23,7 @@ object HomeComponent {
           ),
           <.div(
             ^.cls := "ui basic padded segment",
-            <.h2(
-              ^.cls := "ui dividing header",
-              "Introduction"),
+            <.h2(^.cls := "ui dividing header", "Introduction"),
             <.p(
               "ScalaJS Semantic UI React is a facade for ",
               <.a(
@@ -35,7 +33,8 @@ object HomeComponent {
             )
           )
         )
-      }.build
+      }
+      .build
 
   def apply() = component()
 }
