@@ -61,7 +61,7 @@ val root =
         "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
-        "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.5",
+        "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.5-4-gaaa4760",
         "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
       ),
