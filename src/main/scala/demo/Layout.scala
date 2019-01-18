@@ -6,6 +6,7 @@ import japgolly.scalajs.react.extra.router._
 import react.semanticui.modules.sidebar._
 import react.semanticui.elements.segment._
 import react.semanticui.elements.header._
+import react.semanticui.elements.image._
 import react.semanticui.collections.menu._
 import react.semanticui.As
 
@@ -51,7 +52,7 @@ object Layout {
               Segment(
                 Segment.props(basic = true),
                 Header(Header.props(as = "h3"), "Application Content"),
-                <.img(^.src := "https://react.semantic-ui.com/images/wireframe/paragraph.png")
+                Image(Image.props(src = "https://react.semantic-ui.com/images/wireframe/paragraph.png"))
               )
             )
           )

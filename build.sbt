@@ -7,6 +7,9 @@ parallelExecution in (ThisBuild, Test) := false
 
 cancelable in Global := true
 
+resolvers in Global += Resolver.sonatypeRepo("releases")
+
+
 addCommandAlias("restartWDS", "; fastOptJS::stopWebpackDevServer; fastOptJS::startWebpackDevServer; ~fastOptJS")
 
 val root =
@@ -61,7 +64,7 @@ val root =
         "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
-        "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.5-4-gaaa4760",
+        "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.6+2-150b0c33",
         "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
       ),
