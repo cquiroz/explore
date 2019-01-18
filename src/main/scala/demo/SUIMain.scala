@@ -1,16 +1,40 @@
 package demo
 
+import cats.effect.ExitCode
+import cats.effect.IO
+import cats.effect.IOApp
+import cats.effect.ConcurrentEffect
 import org.scalajs.dom
 import scala.scalajs.js
 import js.annotation._
-import japgolly.scalajs.react._
-import vdom.all._
-import extra.router._
+import japgolly.scalajs.react.extra.router._
+import com.olegpy.shironeko._
+import japgolly.scalajs.react.vdom.html_<^._
+
+object Store extends StoreBase[IO](OTMain.Instance)
+  with ImpureIntegration[IO]
+  with ScalaJSReactIntegration[IO] {
+  val counter = Cell(0)
+}
+
+object Actions {
+  val increment: IO[Unit] = Store.counter.update(_ + 1)
+  val decrement: IO[Unit] = Store.counter.update(_ - 1)
+}
+
+object App extends Store.Container(Store.counter.listen) {
+  override def render(a: Int) = ???// TestComponent(a)
+}
+
 
 @JSExportTopLevel("OT")
-object OTMain {
+object OTMain extends IOApp {
+  val Instance = ConcurrentEffect[IO]
+
   @JSExport
-  def main(): Unit = {
+  def runIOApp(): Unit = main(Array.empty)
+
+  override def run(args: List[String]): IO[ExitCode] = IO {
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")
       elem.id = "root"
@@ -22,30 +46,6 @@ object OTMain {
       container
     )
 
-    ()
+    ExitCode.Success
   }
-}
-
-sealed trait ElementItem
-case object IconsElement extends ElementItem
-case object LabelsElement extends ElementItem
-
-sealed trait Page
-case object HomePage extends Page
-final case class ElementPage(e: ElementItem) extends Page
-
-object Routing {
-  val config: RouterConfig[Page] = RouterConfigDsl[Page].buildConfig { dsl =>
-    import dsl._
-
-    (
-      trimSlashes
-        | staticRoute(root, HomePage) ~>
-          render(HomeComponent.apply)
-    ).notFound(redirectToPage(HomePage)(Redirect.Replace))
-      .renderWith(layout)
-      .logToConsole
-  }
-
-  private def layout(c: RouterCtl[Page], r: Resolution[Page]) = Layout(Layout.Props(c, r))
 }
