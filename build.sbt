@@ -25,6 +25,7 @@ val root =
       webpackConfigFile in fastOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "dev.webpack.config.js"),
       webpackConfigFile in fullOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "prod.webpack.config.js"),
       webpackMonitoredDirectories            += (resourceDirectory in Compile).value,
+      webpackMonitoredDirectories            += (sourceDirectory.value / "main" / "webpack"),
       webpackResources                       := (sourceDirectory.value / "main" / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
       webpackExtraArgs                       := Seq("--progress"),
