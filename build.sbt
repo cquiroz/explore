@@ -9,7 +9,6 @@ cancelable in Global := true
 
 resolvers in Global += Resolver.sonatypeRepo("releases")
 
-
 addCommandAlias("restartWDS", "; fastOptJS::stopWebpackDevServer; fastOptJS::startWebpackDevServer; ~fastOptJS")
 
 val root =
@@ -69,7 +68,9 @@ val root =
         "co.fs2"        %%% "fs2-core"    % "1.0.2",
         "io.github.cquiroz" %%% "shironeko-core"       % "0.0.9-SNAPSHOT",
         "io.github.cquiroz" %%% "shironeko-scalajs-react"       % "0.0.9-SNAPSHOT",
+        "io.github.cquiroz" %%% "sjs-rgl"       % "0.0.3",
         "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.6+2-150b0c33",
+        "io.github.cquiroz" %%% "scalajs-react-virtualized"       % "0.4.5",
         "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
         "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
       ),

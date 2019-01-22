@@ -5,8 +5,6 @@ import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
 import react.semanticui.modules.sidebar._
 import react.semanticui.elements.segment._
-import react.semanticui.elements.header._
-import react.semanticui.elements.image._
 import react.semanticui.collections.menu._
 import react.semanticui.As
 
@@ -31,7 +29,7 @@ object Layout {
               Icons.BarsIcon,
               "Menu")),
           Sidebar.Pushable(
-            Sidebar.Pushable.props(),
+            Sidebar.Pushable.props(className = "maingrid"),
             Sidebar(
               Sidebar.props(
                 as = As.Menu(
@@ -45,14 +43,14 @@ object Layout {
                 direction = SidebarDirection.Left,
                 visible   = s.menu
               ),
-              Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "Home")
+              Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "P I"),
+              Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "P II")
             ),
             Sidebar.Pusher(
               Sidebar.Pusher.props(dimmed = s.menu),
               Segment(
                 Segment.props(basic = true),
-                Header(Header.props(as = "h3"), "Application Content"),
-                Image(Image.props(src = "https://react.semantic-ui.com/images/wireframe/paragraph.png"))
+                p.r.render()
               )
             )
           )

@@ -2,6 +2,8 @@ package demo
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
+import react.semanticui.elements.header._
+import react.semanticui.elements.image._
 
 object HomeComponent {
 
@@ -10,67 +12,12 @@ object HomeComponent {
       .builder[Unit]("Home")
       .render { _ =>
         <.div(
-          ^.cls := "ui container",
-          <.div(
-            ^.cls := "ui basic center aligned segment",
-            <.img(
-              ^.cls := "ui small centered image"
-            ),
-            <.h1(
-              ^.cls := "ui center aligned header",
-              "ScalaJS Semantic UI React"
-            )
-          ),
-          <.div(
-            ^.cls := "ui basic padded segment",
-            <.h2(^.cls := "ui dividing header", "Introduction"),
-            <.p(
-              "ScalaJS Semantic UI React is a facade for ",
-              <.a(
-                ^.href := "https://react.semantic-ui.com",
-                "Semantic React UI"
-              )
-            )
-          )
+                Header(Header.props(as = "h3"), "Application Content"),
+                Image(Image.props(src = "https://react.semantic-ui.com/images/wireframe/paragraph.png"))
+
         )
       }
       .build
 
   def apply() = component()
-}
-
-object TestComponent {
-
-  private val component =
-    ScalaComponent
-      .builder[Unit]("Home")
-      .render { _ =>
-        <.div(
-          ^.cls := "ui container",
-          <.div(
-            ^.cls := "ui basic center aligned segment",
-            <.img(
-              ^.cls := "ui small centered image"
-            ),
-            <.h1(
-              ^.cls := "ui center aligned header",
-              "ScalaJS Semantic UI React"
-            )
-          ),
-          <.div(
-            ^.cls := "ui basic padded segment",
-            <.h2(^.cls := "ui dividing header", "Introduction"),
-            <.p(
-              "ScalaJS Semantic UI React is a facade for ",
-              <.a(
-                ^.href := "https://react.semantic-ui.com",
-                "Semantic React UI"
-              )
-            )
-          )
-        )
-      }
-      .build
-
-  def apply(i: Int) = component()
 }
