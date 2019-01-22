@@ -8,7 +8,7 @@ import react.semanticui.elements.segment._
 import react.semanticui.collections.menu._
 import react.semanticui.As
 
-object Layout {
+object OTLayout {
   final case class Props(c: RouterCtl[Page], r: Resolution[Page])
 
   final case class State(menu: Boolean)

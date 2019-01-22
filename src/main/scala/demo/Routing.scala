@@ -24,5 +24,5 @@ object Routing {
       .logToConsole
   }
 
-  private def layout(c: RouterCtl[Page], r: Resolution[Page]) = Layout(Layout.Props(c, r))
+  private def layout(c: RouterCtl[Page], r: Resolution[Page]) = OTLayout(OTLayout.Props(c, r))
 }
