@@ -8,7 +8,13 @@ import React from "react";
 if (process.env.NODE_ENV !== "production") {
   const { whyDidYouUpdate } = require("why-did-you-update");
   whyDidYouUpdate(React, {
-    exclude: ["Draggable", "DraggableCore", "AutoSizer"]
+    exclude: [
+      "GridItem",
+      "Resizable",
+      "Draggable",
+      "DraggableCore",
+      "AutoSizer"
+    ]
   });
 }
 

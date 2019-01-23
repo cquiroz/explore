@@ -4,7 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
 import react.semanticui.modules.sidebar._
-import react.semanticui.elements.segment._
+// import react.semanticui.elements.segment._
 import react.semanticui.collections.menu._
 import react.semanticui.As
 
@@ -22,12 +22,16 @@ object OTLayout {
           ^.cls := "theme dimmable",
           Menu(
             Menu.props(
-              attached = MenuAttached.Top
+              attached   = MenuAttached.Top,
+              compact    = true,
+              borderless = true,
+              tabular    = MenuTabular.Right
             ),
             Menu.Item(
               Menu.Item.props(as = "a", onClick = $.modState((s: State) => s.copy(menu = !s.menu))),
               Icons.BarsIcon,
-              "Menu")),
+              "OT")
+          ),
           Sidebar.Pushable(
             Sidebar.Pushable.props(className = "maingrid"),
             Sidebar(
@@ -48,10 +52,10 @@ object OTLayout {
             ),
             Sidebar.Pusher(
               Sidebar.Pusher.props(dimmed = s.menu),
-              Segment(
-                Segment.props(basic = true),
-                p.r.render()
-              )
+              // Segment(
+              //   Segment.props(basic = true),
+              p.r.render()
+              // )
             )
           )
         )
