@@ -58,7 +58,8 @@ val root =
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "semantic-ui-less" -> SUI,
-        "semantic-ui-react" -> reactSUI
+        "semantic-ui-react" -> reactSUI,
+        "aladin-lite" -> "0.0.4"
       ),
       libraryDependencies              ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
@@ -145,6 +146,8 @@ lazy val commonSettings = Seq(
       "-Ywarn-unused:privates",            // Warn if a private member is unused.
       "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
       "-Yrangepos",
+      "-Ycache-plugin-class-loader:last-modified",
+      "-Ycache-macro-class-loader:last-modified",
       "-P:scalajs:sjsDefinedByDefault"
     ),
     // Settings to use git to define the version of the project

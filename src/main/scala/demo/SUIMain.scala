@@ -26,24 +26,15 @@ object Actions {
 object App extends Store.Container(Store.counter.listen) {
   override def render(a: Int) = ??? // TestComponent(a)
 }
+
 @JSExportTopLevel("OT")
 object OTMain extends IOApp {
   val Instance = ConcurrentEffect[IO]
-
-  @JSImport("react-grid-layout/css/styles.css", JSImport.Default)
-  @js.native
-  object ReactGridLayoutStyles extends js.Object
-
-  @JSImport("react-resizable/css/styles.css", JSImport.Default)
-  @js.native
-  object ReactResizableStyles extends js.Object
-
+  // println(Aladin.aladin("#abc"))
   @JSExport
   def runIOApp(): Unit = main(Array.empty)
 
   override def run(args: List[String]): IO[ExitCode] = IO {
-    ReactGridLayoutStyles
-    ReactResizableStyles
 
     val container = Option(dom.document.getElementById("root")).getOrElse {
       val elem = dom.document.createElement("div")
