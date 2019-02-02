@@ -51,9 +51,9 @@ object HomeComponent {
                            rowHeight        = 30,
                            onLayoutChange = (_, _) => $.modState(_ + 1),
                            layouts          = layouts),
-                  <.div(^.key := "tpe",    ^.cls := "tile", "tpe"),
-                  <.div(^.key := "coords", ^.cls := "tile", "coords"),
-                  <.div(^.key := "doc", ^.cls := "tile", Tpe(i))
+                  <.div(^.key := "tpe",  ^.cls := "tile",    Tile(Tile.Props("Sample"), "tpe")),
+                  <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), "coords")),
+                  <.div(^.key := "doc", ^.cls := "tile", Tile(Tile.Props("Target Position"), Tpe(i)))
                 ).unless(s.width == 0))
               }
             ))

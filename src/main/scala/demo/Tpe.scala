@@ -30,7 +30,7 @@ object Tpe {
       .render { _ =>
         println("TPE")
         <.div(
-          // ^.height := 100.pc,
+          ^.height := 100.pc,
           ^.id := "tpe-aladin"
         )
       }
