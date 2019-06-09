@@ -1,7 +1,7 @@
-val reactJS = "16.5.1"
-val scalaJsReact = "1.3.1"
+val reactJS = "16.7.0"
+val scalaJsReact = "1.4.2"
 val SUI = "2.4.1"
-val reactSUI = "0.84.0"
+val reactSUI = "0.87.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
@@ -65,15 +65,15 @@ val root =
         "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
-        "org.typelevel" %%% "cats-effect" % "1.1.0",
-        "co.fs2"        %%% "fs2-core"    % "1.0.2",
+        "org.typelevel" %%% "cats-effect" % "1.3.1",
+        "co.fs2"        %%% "fs2-core"    % "1.0.4",
         "io.github.cquiroz" %%% "shironeko-core"       % "0.0.9-SNAPSHOT",
         "io.github.cquiroz" %%% "shironeko-scalajs-react"       % "0.0.9-SNAPSHOT",
-        "io.github.cquiroz" %%% "sjs-rgl"       % "0.0.3",
-        "io.github.cquiroz" %%% "scalajs-react-semantic-ui"       % "0.0.6+2-150b0c33",
-        "io.github.cquiroz" %%% "scalajs-react-virtualized"       % "0.4.5",
-        "com.lihaoyi"                       %%% "utest"      % "0.6.6" % Test,
-        "org.typelevel"                     %%% "cats-core"  % "1.5.0" % Test
+        "io.github.cquiroz.react" %%% "sjs-rgl"       % "0.0.6",
+        "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.1.2",
+        "io.github.cquiroz.react" %%% "react-virtualized"       % "0.6.1",
+        "com.lihaoyi"                       %%% "utest"      % "0.6.9" % Test,
+        "org.typelevel"                     %%% "cats-core"  % "1.6.0" % Test
       ),
       // don't publish the demo
       publish                                := {},

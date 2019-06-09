@@ -21,11 +21,12 @@ object Tile {
               borderless = true,
               tabular    = MenuTabular.Right
             ),
-            Menu.Item(
-              Menu.Item.props(as = "a"),
+            MenuItem(
+              MenuItem.props(as = "a"),
               Icons.BarsIcon,
               p.title),
           ),
+          ^.cls := "tileTitle",
           c
         )
         // <.div(

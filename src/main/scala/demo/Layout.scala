@@ -27,10 +27,10 @@ object OTLayout {
               borderless = true,
               tabular    = MenuTabular.Right
             ),
-            Menu.Item(
-              Menu.Item.props(as = "a", onClick = $.modState((s: State) => s.copy(menu = !s.menu))),
+            MenuItem(
+              MenuItem.props(as = "a", onClick = $.modState((s: State) => s.copy(menu = !s.menu))),
               Icons.BarsIcon,
-              "OT")
+              "Formerly known as OT")
           ),
           Sidebar.Pushable(
             Sidebar.Pushable.props(className = "maingrid"),
@@ -47,8 +47,8 @@ object OTLayout {
                 direction = SidebarDirection.Left,
                 visible   = s.menu
               ),
-              Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "P I"),
-              Menu.Item(Menu.Item.props(as = "a"), Icons.HomeIcon, "P II")
+              MenuItem(MenuItem.props(as = "a"), Icons.HomeIcon, "P I"),
+              MenuItem(MenuItem.props(as = "a"), Icons.HomeIcon, "P II")
             ),
             Sidebar.Pusher(
               Sidebar.Pusher.props(dimmed = s.menu),

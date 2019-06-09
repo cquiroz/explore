@@ -9,7 +9,6 @@ import scala.scalajs.js
 import js.annotation._
 import japgolly.scalajs.react.extra.router._
 import com.olegpy.shironeko._
-import japgolly.scalajs.react.vdom.html_<^._
 
 object Store
     extends StoreBase[IO](OTMain.Instance)

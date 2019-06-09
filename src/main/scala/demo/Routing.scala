@@ -1,6 +1,5 @@
 package demo
 
-import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
 
 sealed trait ElementItem
