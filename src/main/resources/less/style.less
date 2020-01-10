@@ -1,3 +1,5 @@
+@import "~theme/modules/sidebar.variables";
+
 html,
 body {
   box-sizing: border-box;
@@ -20,6 +22,11 @@ body {
 
 .tilemenu {
   background: darkgray;
+}
+
+.sidetab {
+  // transform: rotate(-90deg);
+  writing-mode: sideways-lr;
 }
 
 // React grid layout
@@ -101,4 +108,11 @@ body {
   background-origin: content-box;
   box-sizing: border-box;
   cursor: se-resize;
+}
+
+// .pushable {
+//   height: auto;
+// }
+.pushable > .pusher {
+  width: calc(100% - @wideWidth - 6px);
 }

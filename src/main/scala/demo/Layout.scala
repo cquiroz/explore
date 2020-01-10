@@ -4,63 +4,61 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.extra.router._
 import react.semanticui.modules.sidebar._
-// import react.semanticui.elements.segment._
 import react.semanticui.collections.menu._
 import react.semanticui.As
+import react.common._
+import react.common.gProps2VdomNodePC
+
+final case class OTLayout(c: RouterCtl[Page], r: Resolution[Page]) extends ReactProps {
+
+  @inline def render: VdomElement = OTLayout.component(this)
+}
 
 object OTLayout {
-  final case class Props(c: RouterCtl[Page], r: Resolution[Page])
 
   final case class State(menu: Boolean)
 
   private val component =
     ScalaComponent
-      .builder[Props]("Demo")
-      .initialState(State(false))
+      .builder[OTLayout]("Demo")
+      .initialState(State(true))
       .renderPS { ($, p, s) =>
         <.div(
           ^.cls := "theme dimmable",
           Menu(
-            Menu.props(
-              attached   = MenuAttached.Top,
-              compact    = true,
-              borderless = true,
-              tabular    = MenuTabular.Right
-            ),
-            MenuItem(
-              MenuItem.props(as = "a", onClick = $.modState((s: State) => s.copy(menu = !s.menu))),
+            attached   = MenuAttached.Top,
+            compact    = true,
+            borderless = true,
+            tabular    = MenuTabular.Right
+          )(
+            MenuItem(as = "a", onClick = $.modState((s: State) => s.copy(menu = !s.menu)))(
               Icons.BarsIcon,
-              "Formerly known as OT")
+              "Explore"
+            )
           ),
-          Sidebar.Pushable(
-            Sidebar.Pushable.props(className = "maingrid"),
+          SidebarPushable(className = "maingrid")(
             Sidebar(
-              Sidebar.props(
-                as = As.Menu(
-                  Menu.props(
-                    inverted = true,
-                    vertical = true,
-                    icon     = MenuIcon.Labeled,
-                  )),
-                width     = SidebarWidth.Thin,
-                animation = SidebarAnimation.Push,
-                direction = SidebarDirection.Left,
-                visible   = s.menu
+              as = As.Menu(
+                Menu(
+                  inverted = true,
+                  vertical = true,
+                  icon     = MenuIcon.Labeled
+                )
               ),
-              MenuItem(MenuItem.props(as = "a"), Icons.HomeIcon, "P I"),
-              MenuItem(MenuItem.props(as = "a"), Icons.HomeIcon, "P II")
+              width     = SidebarWidth.Wide,
+              animation = SidebarAnimation.Push,
+              direction = SidebarDirection.Left,
+              visible   = s.menu
+            )(
+              MenuItem(as = "a", className = "sidetab" )("Targets"),
+              MenuItem(as = "a", className = "sidetab")("P II")
             ),
-            Sidebar.Pusher(
-              Sidebar.Pusher.props(dimmed = s.menu),
-              // Segment(
-              //   Segment.props(basic = true),
+            SidebarPusher(dimmed = false)(
               p.r.render()
-              // )
             )
           )
         )
       }
       .build
 
-  def apply(p: Props) = component(p)
 }

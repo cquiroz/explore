@@ -3,7 +3,6 @@ package demo
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.IOApp
-import cats.effect.ConcurrentEffect
 import org.scalajs.dom
 import scala.scalajs.js
 import js.annotation._
@@ -11,8 +10,7 @@ import japgolly.scalajs.react.extra.router._
 
 @JSExportTopLevel("Explore")
 object ExploreMain extends IOApp {
-  val Instance = ConcurrentEffect[IO]
-  // println(Aladin.aladin("#abc"))
+
   @JSExport
   def runIOApp(): Unit = main(Array.empty)
 

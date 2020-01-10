@@ -2,11 +2,11 @@ package demo
 
 import japgolly.scalajs.react.extra.router._
 
-sealed trait ElementItem
+sealed trait ElementItem extends Product with Serializable
 case object IconsElement extends ElementItem
 case object LabelsElement extends ElementItem
 
-sealed trait Page
+sealed trait Page extends Product with Serializable
 case object HomePage extends Page
 final case class ElementPage(e: ElementItem) extends Page
 
@@ -15,13 +15,12 @@ object Routing {
     import dsl._
 
     (
-      trimSlashes
-        | staticRoute(root, HomePage) ~>
-          render(HomeComponent.apply)
-    ).notFound(redirectToPage(HomePage)(Redirect.Replace))
+      staticRoute(root, HomePage) ~>
+        render(HomeComponent.component())
+    ).notFound(redirectToPage(HomePage)(SetRouteVia.HistoryPush))
       .renderWith(layout)
       .logToConsole
   }
 
-  private def layout(c: RouterCtl[Page], r: Resolution[Page]) = OTLayout(OTLayout.Props(c, r))
+  private def layout(c: RouterCtl[Page], r: Resolution[Page]) = OTLayout(c, r)
 }

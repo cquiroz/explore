@@ -3,21 +3,7 @@ package demo
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import scala.scalajs.js
-// import scala.scalajs.js.annotation.JSImport
-// import scala.scalajs.js.Dynamic.global
 
-// @js.native
-// @JSImport("aladin-lite", "A")
-// object Aladin extends js.Object {
-//   def aladin(id: String): Unit = js.native
-// }
-//
-// @js.native
-// @JSImport("aladin-lite", "CooFrameEnum")
-// object CooFrameEnum extends js.Object {
-//   def aladin(id: String): Unit = js.native
-// }
-//
 object Tpe {
   trait AladinOpts extends js.Object {
     var fov: Double
@@ -36,7 +22,7 @@ object Tpe {
       .componentDidMount { _ =>
         Callback {
           val opt = new AladinOpts() {
-            var fov = 1
+            var fov    = 1
             var target = "M81"
           }
           js.Dynamic.global.console.log(js.Dynamic.global.A)
@@ -46,7 +32,7 @@ object Tpe {
       .componentDidUpdate { _ =>
         Callback {
           val opt = new AladinOpts() {
-            var fov = 1
+            var fov    = 1
             var target = "M81"
           }
           js.Dynamic.global.console.log(js.Dynamic.global.A)
@@ -55,5 +41,5 @@ object Tpe {
       }
       .build
 
-  def apply(i:Int) = component(i)
+  def apply(i: Int) = component(i)
 }

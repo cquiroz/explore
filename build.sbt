@@ -1,34 +1,31 @@
 val reactJS = "16.7.0"
-val scalaJsReact = "1.4.2"
+val scalaJsReact = "1.5.0"
 val SUI = "2.4.1"
-val reactSUI = "0.87.1"
 
 parallelExecution in (ThisBuild, Test) := false
 
 cancelable in Global := true
 
-resolvers in Global += Resolver.sonatypeRepo("releases")
+Global / onChangedBuildSource := IgnoreSourceChanges
+
+resolvers in Global += Resolver.sonatypeRepo("public")
 
 addCommandAlias("restartWDS", "; fastOptJS::stopWebpackDevServer; fastOptJS::startWebpackDevServer; ~fastOptJS")
 
 val root =
   project.in(file("."))
     .settings(commonSettings: _*)
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
     .enablePlugins(ScalaJSBundlerPlugin)
     .settings(commonSettings: _*)
     .settings(
-      version in webpack                := "4.28.2",
-      version in startWebpackDevServer  := "3.1.14",
-      webpackConfigFile in fastOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "dev.webpack.config.js"),
+    version in webpack                       := "4.41.2",
+    version in startWebpackDevServer         := "3.9.0",
+    webpackConfigFile in fastOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "dev.webpack.config.js"),
       webpackConfigFile in fullOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "prod.webpack.config.js"),
       webpackMonitoredDirectories            += (resourceDirectory in Compile).value,
       webpackMonitoredDirectories            += (sourceDirectory.value / "main" / "webpack"),
       webpackResources                       := (sourceDirectory.value / "main" / "webpack") * "*.js",
       includeFilter in webpackMonitoredFiles := "*",
-      webpackExtraArgs                       := Seq("--progress"),
-      // webpackExtraArgs                       := Seq("--progress", "--display", "verbose"),
       useYarn                                := true,
       webpackBundlingMode in fastOptJS       := BundlingMode.LibraryOnly(),
       webpackBundlingMode in fullOptJS       := BundlingMode.Application,
@@ -58,22 +55,20 @@ val root =
         "react"           -> reactJS,
         "react-dom"       -> reactJS,
         "semantic-ui-less" -> SUI,
-        "semantic-ui-react" -> reactSUI,
         "aladin-lite" -> "0.0.4"
       ),
       libraryDependencies              ++= Seq(
         "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
         "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
-        "org.typelevel" %%% "cats-effect" % "1.3.1",
-        "co.fs2"        %%% "fs2-core"    % "1.0.4",
-        "io.github.cquiroz" %%% "shironeko-core"       % "0.0.9-SNAPSHOT",
-        "io.github.cquiroz" %%% "shironeko-scalajs-react"       % "0.0.9-SNAPSHOT",
-        "io.github.cquiroz.react" %%% "sjs-rgl"       % "0.0.6",
-        "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.1.2",
-        "io.github.cquiroz.react" %%% "react-virtualized"       % "0.6.1",
-        "com.lihaoyi"                       %%% "utest"      % "0.6.9" % Test,
-        "org.typelevel"                     %%% "cats-core"  % "1.6.0" % Test
+        "org.typelevel" %%% "cats-effect" % "2.0.0",
+        "co.fs2"        %%% "fs2-core"    % "2.1.0",
+        "io.github.cquiroz.react" %%% "common" % "0.4.0",
+        "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.0",
+        "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.0",
+        "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.0",
+        "com.lihaoyi"                       %%% "utest"      % "0.7.2" % Test,
+        "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
       ),
       // don't publish the demo
       publish                                := {},
@@ -83,12 +78,11 @@ val root =
     )
 
 lazy val commonSettings = Seq(
-  scalaVersion            := "2.12.8",
+  scalaVersion            := "2.13.1",
   organization            := "io.github.cquiroz",
   description             := "OT demo",
   homepage                := Some(url("https://github.com/cquiroz/scalajs-react-semantic-ui")),
   licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
-  useGpg                  := true,
   publishArtifact in Test := false,
   publishMavenStyle       := true,
   publishTo               := {
@@ -100,61 +94,12 @@ lazy val commonSettings = Seq(
     },
   pomExtra                := pomData,
   pomIncludeRepository    := { _ => false },
-  scalacOptions           := Seq(
-      "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
-      "-encoding", "utf-8",                // Specify character encoding used by source files.
-      "-explaintypes",                     // Explain type errors in more detail.
-      "-feature",                          // Emit warning and location for usages of features that should be imported explicitly.
-      "-language:existentials",            // Existential types (besides wildcard types) can be written and inferred
-      "-language:experimental.macros",     // Allow macro definition (besides implementation and application)
-      "-language:higherKinds",             // Allow higher-kinded types
-      "-language:implicitConversions",     // Allow definition of implicit functions called views
-      "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
-      "-Xcheckinit",                       // Wrap field accessors to throw an exception on uninitialized access.
-      "-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
-      "-Xfuture",                          // Turn on future language features.
-      "-Xlint:adapted-args",               // Warn if an argument list is modified to match the receiver.
-      "-Xlint:by-name-right-associative",  // By-name parameter of right associative operator.
-      "-Xlint:constant",                   // Evaluation of a constant arithmetic expression results in an error.
-      "-Xlint:delayedinit-select",         // Selecting member of DelayedInit.
-      "-Xlint:doc-detached",               // A Scaladoc comment appears to be detached from its element.
-      "-Xlint:inaccessible",               // Warn about inaccessible types in method signatures.
-      "-Xlint:infer-any",                  // Warn when a type argument is inferred to be `Any`.
-      "-Xlint:missing-interpolator",       // A string literal appears to be missing an interpolator id.
-      "-Xlint:nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-      "-Xlint:nullary-unit",               // Warn when nullary methods return Unit.
-      "-Xlint:option-implicit",            // Option.apply used implicit view.
-      "-Xlint:package-object-classes",     // Class or object defined in package object.
-      "-Xlint:poly-implicit-overload",     // Parameterized overloaded implicit methods are not visible as view bounds.
-      "-Xlint:private-shadow",             // A private field (or class parameter) shadows a superclass field.
-      "-Xlint:stars-align",                // Pattern sequence wildcard must align with sequence component.
-      "-Xlint:type-parameter-shadow",      // A local type parameter shadows a type already in scope.
-      "-Xlint:unsound-match",              // Pattern match may not be typesafe.
-      "-Yno-adapted-args",                 // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
-      "-Ypartial-unification",             // Enable partial unification in type constructor inference
-      "-Ywarn-extra-implicit",             // Warn when more than one implicit parameter section is defined.
-      "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
-      "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
-      "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-      "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
-      "-Ywarn-numeric-widen",              // Warn when numerics are widened.
-      "-Ywarn-unused:implicits",           // Warn if an implicit parameter is unused.
-      "-Ywarn-unused:imports",             // Warn if an import selector is not referenced.
-      "-Ywarn-unused:locals",              // Warn if a local definition is unused.
-      // "-Ywarn-unused:params",              // Warn if a value parameter is unused.
-      "-Ywarn-unused:patvars",             // Warn if a variable bound in a pattern is unused.
-      "-Ywarn-unused:privates",            // Warn if a private member is unused.
-      "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
-      "-Yrangepos",
-      "-Ycache-plugin-class-loader:last-modified",
-      "-Ycache-macro-class-loader:last-modified",
-      "-P:scalajs:sjsDefinedByDefault"
-    ),
-    // Settings to use git to define the version of the project
-    git.useGitDescribe := true,
-    git.formattedShaVersion := git.gitHeadCommit.value map { sha => s"v$sha" },
-    git.uncommittedSignifier in ThisBuild := Some("UNCOMMITTED"),
-    useGpg := true
+  scalacOptions ~= (_.filterNot(Set(
+    // By necessity facades will have unused params
+    "-Wdead-code",
+    "-Wunused:params"
+  ))),
+  scalacOptions += "-P:scalajs:sjsDefinedByDefault",
   )
 
 lazy val pomData =

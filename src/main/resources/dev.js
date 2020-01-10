@@ -22,10 +22,6 @@ import React from "react";
 // };
 
 var aladin = require("./src/js/Aladin");
-// var A = require("./src/js/cds");
-// console.log("aladin");
-console.log("A  ");
-// console.log(A);
 
 // Enable why did you update plugin
 if (process.env.NODE_ENV !== "production") {
@@ -36,12 +32,16 @@ if (process.env.NODE_ENV !== "production") {
       "Resizable",
       "Draggable",
       "DraggableCore",
-      "AutoSizer"
+      "MenuItem",
+      "ReactGridLayout",
+      "ResponsiveReactGridLayout",
+      /SizeM\w/,
+      "Menu"
     ]
   });
 }
 
 if (module.hot) {
   module.hot.accept();
-  App.OT.runIOApp();
+  App.Explore.runIOApp();
 }

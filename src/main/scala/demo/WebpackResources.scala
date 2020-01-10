@@ -1,7 +1,6 @@
 package demo
 
 import scala.scalajs.js
-// import scala.scalajs.js.annotation.JSImport
 
 object WebpackResources {
 

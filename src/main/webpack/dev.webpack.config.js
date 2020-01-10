@@ -44,7 +44,7 @@ const Web = Merge(
       new Webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         filename: "index.html",
-        title: "OT Demo",
+        title: "Explore",
         chunks: ["demo"]
       })
     ]
