@@ -63,11 +63,11 @@ val root =
         "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
         "org.typelevel" %%% "cats-effect" % "2.0.0",
         "co.fs2"        %%% "fs2-core"    % "2.1.0",
-        "io.github.cquiroz.react" %%% "common" % "0.4.0",
-        "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.0",
-        "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.0",
-        "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.0",
-        "com.lihaoyi"                       %%% "utest"      % "0.7.2" % Test,
+        "io.github.cquiroz.react" %%% "common" % "0.4.2",
+        "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.1",
+        "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.1",
+        "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.1",
+        "com.lihaoyi"                       %%% "utest"      % "0.7.3" % Test,
         "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
       ),
       // don't publish the demo
