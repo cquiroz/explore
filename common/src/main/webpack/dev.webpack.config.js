@@ -21,7 +21,7 @@ const Web = Merge(
   {
     mode: "development",
     entry: {
-      demo: [path.resolve(parts.resourcesDir, "./dev.js")]
+      demo: [path.resolve(parts.localResourcesDir, "./dev.js")]
     },
     output: {
       publicPath: "/" // Required to make the url navigation work

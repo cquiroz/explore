@@ -1,5 +1,9 @@
+// Copyright (c) 2016-2019 Association of Universities for Research in Astronomy, Inc. (AURA)
+// For license information see LICENSE or https://opensource.org/licenses/BSD-3-Clause
+
 package demo
 
+import explore.conditions.Conditions
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
@@ -36,7 +40,7 @@ object HomeComponent {
     ScalaComponent
       .builder[Unit]("Home")
       .initialState(0)
-      .renderPS { ($, _, i) =>
+      .renderPS { (_, _, i) =>
         <.div(
           ^.cls := "rgl-area",
           SizeMe() { s =>
@@ -51,7 +55,7 @@ object HomeComponent {
                 onLayoutChange   = (a, b) => Callback.log(a.toString) *> Callback.log(b.toString),
                 layouts          = layouts
               )(
-                <.div(^.key := "tpe",    ^.cls := "tile", Tile(Tile.Props("Sample"), Form())),
+                <.div(^.key := "tpe",    ^.cls := "tile", Tile(Tile.Props("Conditions"), Conditions())),
                 <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),
                 <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), Tpe(i)))
               )

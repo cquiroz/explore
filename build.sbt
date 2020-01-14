@@ -11,26 +11,91 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 resolvers in Global += Resolver.sonatypeRepo("public")
 
-addCommandAlias("restartWDS", "; explore/fastOptJS::stopWebpackDevServer; explore/fastOptJS::startWebpackDevServer; ~explore/fastOptJS")
+addCommandAlias("exploreWDS", "; explore/fastOptJS::stopWebpackDevServer; explore/fastOptJS::startWebpackDevServer; ~explore/fastOptJS")
+addCommandAlias("conditionsWDS", "; conditions/fastOptJS::stopWebpackDevServer; conditions/fastOptJS::startWebpackDevServer; ~conditions/fastOptJS")
 
-val root =
+lazy val root =
   project
   .in(file("."))
   .settings(commonSettings: _*)
-  .aggregate(explore)
+  .aggregate(common, conditions, explore)
 
-lazy val explore = project
-  .in(file("explore"))
+lazy val common = project
+  .in(file("common"))
   .settings(commonSettings: _*)
   .enablePlugins(ScalaJSBundlerPlugin)
   .settings(
+    // webpackMonitoredDirectories            += (resourceDirectory in (explore, Compile)).value,
+    // webpackMonitoredDirectories            += (resourceDirectory in Compile).value,
+    libraryDependencies              ++= Seq(
+      "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
+      "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.1",
+      // "com.lihaoyi"                       %%% "utest"      % "0.7.3" % Test,
+      // "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
+    ),
+  )
+
+lazy val conditions = project
+  .in(file("conditions"))
+  .settings(commonSettings: _*)
+  .settings(commonWDS: _*)
+  .enablePlugins(ScalaJSBundlerPlugin)
+  .settings(
+    // webpackMonitoredDirectories            += (resourceDirectory in (explore, Compile)).value,
+    libraryDependencies              ++= Seq(
+      "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
+      "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.1",
+      // "com.lihaoyi"                       %%% "utest"      % "0.7.3" % Test,
+      // "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
+    ),
+  ).dependsOn(common)
+
+lazy val explore: Project = project
+  .in(file("explore"))
+  .settings(commonSettings: _*)
+  .settings(commonWDS: _*)
+  .enablePlugins(ScalaJSBundlerPlugin)
+  .settings(
+    libraryDependencies              ++= Seq(
+      "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
+      "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
+      "org.typelevel" %%% "cats-effect" % "2.0.0",
+      "co.fs2"        %%% "fs2-core"    % "2.1.0",
+      "io.github.cquiroz.react" %%% "common" % "0.4.2",
+      "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.1",
+      "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.1",
+      "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.1",
+      "com.lihaoyi"                       %%% "utest"      % "0.7.3" % Test,
+      "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
+    ),
+    // don't publish the demo
+    publish                                := {},
+    publishLocal                           := {},
+    publishArtifact                        := false,
+    Keys.`package`                         := file("")
+  )
+  .dependsOn(conditions)
+
+lazy val commonSettings = gspScalaJsSettings ++ Seq(
+  scalaVersion            := "2.13.1",
+  description             := "Explore",
+  homepage                := Some(url("https://github.com/geminihlsw/explore")),
+  licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause"))
+)
+
+lazy val commonWDS = Seq(
     version in webpack                       := "4.41.2",
     version in startWebpackDevServer         := "3.9.0",
-    webpackConfigFile in fastOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "dev.webpack.config.js"),
-    webpackConfigFile in fullOptJS         := Some(sourceDirectory.value / "main" / "webpack" / "prod.webpack.config.js"),
-    webpackMonitoredDirectories            += (resourceDirectory in Compile).value,
-    webpackMonitoredDirectories            += (sourceDirectory.value / "main" / "webpack"),
-    webpackResources                       := (sourceDirectory.value / "main" / "webpack") * "*.js",
+    webpackConfigFile in fastOptJS         := Some((sourceDirectory in (common, Compile)).value / "webpack" / "dev.webpack.config.js"),
+    webpackConfigFile in fullOptJS         := Some((sourceDirectory in (common, Compile)).value / "webpack" / "prod.webpack.config.js"),
+    webpackMonitoredDirectories            += (resourceDirectory in (common, Compile)).value,
+    webpackMonitoredDirectories            += ((sourceDirectory in (common, Compile)).value / "webpack"),
+    webpackResources                       := ((sourceDirectory in (common, Compile)).value / "webpack") * "*.js",
     includeFilter in webpackMonitoredFiles := "*",
     useYarn                                := true,
     webpackBundlingMode in fastOptJS       := BundlingMode.LibraryOnly(),
@@ -63,36 +128,10 @@ lazy val explore = project
       "semantic-ui-less" -> SUI,
       "aladin-lite" -> "0.0.4"
     ),
-    libraryDependencies              ++= Seq(
-      "com.github.japgolly.scalajs-react" %%% "core"       % scalaJsReact,
-      "com.github.japgolly.scalajs-react" %%% "extra"      % scalaJsReact,
-      "com.github.japgolly.scalajs-react" %%% "test"       % scalaJsReact % Test,
-      "org.typelevel" %%% "cats-effect" % "2.0.0",
-      "co.fs2"        %%% "fs2-core"    % "2.1.0",
-      "io.github.cquiroz.react" %%% "common" % "0.4.2",
-      "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.1",
-      "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.1",
-      "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.1",
-      "com.lihaoyi"                       %%% "utest"      % "0.7.3" % Test,
-      "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
-    ),
-    // don't publish the demo
-    publish                                := {},
-    publishLocal                           := {},
-    publishArtifact                        := false,
-    Keys.`package`                         := file("")
-  )
+)
 
-lazy val commonSettings = Seq(
-  scalaVersion            := "2.13.1",
-  organization            := "io.github.cquiroz",
-  description             := "OT demo",
-  homepage                := Some(url("https://github.com/cquiroz/scalajs-react-semantic-ui")),
-  licenses                := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
-  scalacOptions ~= (_.filterNot(Set(
-    // By necessity facades will have unused params
-    "-Wdead-code",
-    "-Wunused:params"
-  ))),
-  scalacOptions += "-P:scalajs:sjsDefinedByDefault",
+lazy val subWDS = commonWDS ++ Seq(
+    // webpackMonitoredDirectories            += (resourceDirectory in (explore, Compile)).value,
+    webpackMonitoredDirectories            += (sourceDirectory.value / "main" / "webpack"),
+    webpackResources                       := (sourceDirectory.value / "main" / "webpack") * "*.js",
 )
