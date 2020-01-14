@@ -2,7 +2,7 @@ import "./theme/semantic.less";
 import "./less/style.less";
 import "./src/css/aladin.css";
 
-import App from "sjs/root-fastopt.js";
+import App from "sjs/explore-fastopt.js";
 import React from "react";
 
 // var $ = require("jquery");

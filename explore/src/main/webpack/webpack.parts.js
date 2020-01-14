@@ -3,7 +3,6 @@
  * this should be generic enough to be usable across scala.js projects
  */
 const path = require("path");
-
 const Webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -11,7 +10,7 @@ const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const cssnano = require("cssnano");
 
 // Dir at the top of the module. e.g. edu_gemini_seqexec_web_client
-const rootDir = path.resolve(__dirname, "../../../..");
+const rootDir = path.resolve(__dirname, "../../../../");
 module.exports.rootDir = rootDir;
 
 // Resources dir on sbt
@@ -185,7 +184,7 @@ exports.extraAssets = {
   module: {
     rules: [
       {
-        test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$|.mp3$/,
+        test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$|\.mp3$|\.webm$/,
         loader: "file-loader",
         options: {
           name: "[name].[hash].[ext]"
