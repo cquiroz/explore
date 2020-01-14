@@ -1,3 +1,4 @@
+
 val reactJS = "16.7.0"
 val scalaJsReact = "1.5.0"
 val SUI = "2.4.1"
@@ -31,6 +32,7 @@ val root =
       webpackBundlingMode in fullOptJS       := BundlingMode.Application,
       test                                   := {},
       emitSourceMaps                         := false,
+//      addCompilerPlugin("org.scalamacros" %% "paradise" % "2.1.1" cross CrossVersion.full), // For @Lenses
       // NPM libs for development, mostly to let webpack do its magic
       npmDevDependencies in Compile ++= Seq(
         "postcss-loader"                     -> "3.0.0",
@@ -67,6 +69,9 @@ val root =
         "io.github.cquiroz.react" %%% "react-grid-layout"       % "0.2.0",
         "io.github.cquiroz.react" %%% "react-semantic-ui"       % "0.3.0",
         "io.github.cquiroz.react" %%% "react-sizeme"       % "0.1.0",
+        "com.rpiaggio" %%% "crystal" % "0.0.10",
+        "com.github.julien-truffaut" %%%  "monocle-core"  % "2.0.0",
+        "com.github.julien-truffaut" %%%  "monocle-macro"  % "2.0.0",
         "com.lihaoyi"                       %%% "utest"      % "0.7.2" % Test,
         "org.typelevel"                     %%% "cats-core"  % "2.1.0" % Test
       ),
@@ -100,6 +105,7 @@ lazy val commonSettings = Seq(
     "-Wunused:params"
   ))),
   scalacOptions += "-P:scalajs:sjsDefinedByDefault",
+  scalacOptions += "-Ymacro-annotations"
   )
 
 lazy val pomData =
