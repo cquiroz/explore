@@ -55,7 +55,9 @@ object HomeComponent {
                 onLayoutChange   = (a, b) => Callback.log(a.toString) *> Callback.log(b.toString),
                 layouts          = layouts
               )(
-                <.div(^.key := "tpe",    ^.cls := "tile", Tile(Tile.Props("Conditions"), Conditions())),
+                <.div(^.key := "tpe",
+                      ^.cls := "tile",
+                      Tile(Tile.Props("Conditions"), Conditions())),
                 <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),
                 <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), Tpe(i)))
               )

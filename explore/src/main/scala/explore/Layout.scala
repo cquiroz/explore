@@ -53,7 +53,7 @@ object OTLayout {
               direction = SidebarDirection.Left,
               visible   = s.menu
             )(
-              MenuItem(as = "a", className = "sidetab" )("Targets"),
+              MenuItem(as = "a", className = "sidetab")("Targets"),
               MenuItem(as = "a", className = "sidetab")("P II")
             ),
             SidebarPusher(dimmed = false)(

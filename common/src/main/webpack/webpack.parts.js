@@ -9,16 +9,17 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const cssnano = require("cssnano");
 
-// Dir at the top of the module. e.g. edu_gemini_seqexec_web_client
+// Dir at the top of the project
 const rootDir = path.resolve(__dirname, "../../../../");
 module.exports.rootDir = rootDir;
+module.exports.moduleName = path.basename(rootDir);
 
 // Resources dir on sbt
 const resourcesDir = path.resolve(rootDir, "../common/src/main/resources");
 module.exports.resourcesDir = resourcesDir;
 const localResourcesDir = path.resolve(
   rootDir,
-  "../explore/src/main/resources"
+  "../" + module.exports.moduleName + "/src/main/resources"
 );
 module.exports.localResourcesDir = localResourcesDir;
 
