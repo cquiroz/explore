@@ -1,4 +1,4 @@
-package demo.model
+package explore.model
 
 sealed trait Target
 object Target {

@@ -1,10 +1,10 @@
-package demo.model
+package explore.model
 
 import cats.effect._
 import crystal._
 
 object Views {
-  import demo.ExploreMain.rootModel
+  import explore.ExploreMain.rootModel
 
   val targetView: View[IO, Target] = rootModel.view(RootModel.target)
 }

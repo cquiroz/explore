@@ -67,8 +67,12 @@ lazy val commonSettings = gspScalaJsSettings ++ Seq(
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
     "org.typelevel" %%% "cats-effect" % "2.0.0",
     "org.typelevel" %%% "cats-core" % "2.1.0",
-    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.1"
-  )
+    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.1",
+    "com.github.julien-truffaut"        %%%  "monocle-core"           % "2.0.0",
+    "com.github.julien-truffaut"        %%%  "monocle-macro"          % "2.0.0",
+    "com.rpiaggio"                      %%% "crystal"                 % "0.0.10",
+  ),
+  scalacOptions += "-Ymacro-annotations"
 )
 
 lazy val commonWDS = Seq(
@@ -91,23 +95,24 @@ lazy val commonWDS = Seq(
   emitSourceMaps := false,
   // NPM libs for development, mostly to let webpack do its magic
   npmDevDependencies in Compile ++= Seq(
-    "postcss-loader" -> "3.0.0",
-    "autoprefixer" -> "9.4.4",
-    "url-loader" -> "1.1.1",
-    "file-loader" -> "3.0.1",
-    "css-loader" -> "2.1.0",
-    "style-loader" -> "0.23.1",
-    "less" -> "3.9.0",
-    "less-loader" -> "4.1.0",
-    "webpack-merge" -> "4.2.1",
-    "mini-css-extract-plugin" -> "0.5.0",
-    "webpack-dev-server-status-bar" -> "1.1.0",
-    "cssnano" -> "4.1.8",
-    "uglifyjs-webpack-plugin" -> "2.1.1",
-    "html-webpack-plugin" -> "3.2.0",
-    "optimize-css-assets-webpack-plugin" -> "5.0.1",
-    "favicons-webpack-plugin" -> "0.0.9",
-    "why-did-you-update" -> "1.0.6"
+    "postcss-loader"                     -> "3.0.0",
+    "autoprefixer"                       -> "9.7.1",
+    "url-loader"                         -> "2.2.0",
+    "file-loader"                        -> "4.2.0",
+    "css-loader"                         -> "3.2.0",
+    "style-loader"                       -> "1.0.0",
+    "less"                               -> "2.7.2",
+    "less-loader"                        -> "4.1.0",
+    "webpack-merge"                      -> "4.2.2",
+    "mini-css-extract-plugin"            -> "0.8.0",
+    "webpack-dev-server-status-bar"      -> "1.1.0",
+    "cssnano"                            -> "4.1.10",
+    "uglifyjs-webpack-plugin"            -> "2.2.0",
+    "html-webpack-plugin"                -> "3.2.0",
+    "optimize-css-assets-webpack-plugin" -> "5.0.3",
+    "favicons-webpack-plugin"            -> "0.0.9",
+    "why-did-you-update"                 -> "1.0.6",
+    "@packtracker/webpack-plugin"        -> "2.2.0"
   ),
   npmDependencies in Compile ++= Seq(
     "react" -> reactJS,
@@ -115,10 +120,4 @@ lazy val commonWDS = Seq(
     "semantic-ui-less" -> SUI,
     "aladin-lite" -> "0.0.4"
   )
-)
-
-lazy val subWDS = commonWDS ++ Seq(
-  // webpackMonitoredDirectories            += (resourceDirectory in (explore, Compile)).value,
-  webpackMonitoredDirectories += (sourceDirectory.value / "main" / "webpack"),
-  webpackResources := (sourceDirectory.value / "main" / "webpack") * "*.js"
 )
