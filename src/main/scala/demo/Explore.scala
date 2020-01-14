@@ -7,9 +7,10 @@ import org.scalajs.dom
 import scala.scalajs.js
 import js.annotation._
 import japgolly.scalajs.react.extra.router._
+import model.AppState
 
 @JSExportTopLevel("Explore")
-object ExploreMain extends IOApp {
+object ExploreMain extends IOApp with AppState {
 
   @JSExport
   def runIOApp(): Unit = main(Array.empty)
