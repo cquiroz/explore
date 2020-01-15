@@ -10,6 +10,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import react.gridlayout._
 import react.sizeme._
 import scala.scalajs.js
+import model._
 
 object HomeComponent {
 
@@ -41,7 +42,7 @@ object HomeComponent {
     ScalaComponent
       .builder[Unit]("Home")
       .initialState(0)
-      .renderPS { (_, _, i) =>
+      .renderPS { (_, _, _) =>
         <.div(
           ^.cls := "rgl-area",
           SizeMe() { s =>
@@ -60,8 +61,12 @@ object HomeComponent {
                   <.div(^.key := "tpe",
                         ^.cls := "tile",
                         Tile(Tile.Props("Conditions"), Conditions())),
-                  <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),
-                  <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), Tpe(i)))
+                  <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),                  
+                    <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), 
+                      Views.target.flow{ targetOpt =>
+                        Tpe(targetOpt.get)
+                      }
+                    ))                  
                 )
               )
             } else {

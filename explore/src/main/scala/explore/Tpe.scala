@@ -6,8 +6,16 @@ package explore
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import scala.scalajs.js
+import model.Target
+import react.common._
+
+final case class Tpe(target: Target) extends ReactProps {
+  @inline def render: VdomElement = Tpe.component(this)
+}
 
 object Tpe {
+  type Props = Tpe
+
   trait AladinOpts extends js.Object {
     var fov: Double
     var target: String
@@ -15,34 +23,32 @@ object Tpe {
 
   private val component =
     ScalaComponent
-      .builder[Int]("TPE")
+      .builder[Props]("TPE")
       .render { _ =>
         <.div(
           ^.height := 28.pc,
           ^.id := "tpe-aladin"
         )
       }
-      .componentDidMount { _ =>
+      .componentDidMount { $ =>
         Callback {
           val opt = new AladinOpts() {
             var fov    = 1
-            var target = "M81"
+            var target = $.props.target.toString
           }
           js.Dynamic.global.console.log(js.Dynamic.global.A)
           js.Dynamic.global.A.aladin("#tpe-aladin", opt)
         }
       }
-      .componentDidUpdate { _ =>
+      .componentDidUpdate { $ =>
         Callback {
           val opt = new AladinOpts() {
             var fov    = 1
-            var target = "M81"
+            var target = $.currentProps.target.toString
           }
           js.Dynamic.global.console.log(js.Dynamic.global.A)
           js.Dynamic.global.A.aladin("#tpe-aladin", opt)
         }
       }
       .build
-
-  def apply(i: Int) = component(i)
 }
