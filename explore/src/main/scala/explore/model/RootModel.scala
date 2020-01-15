@@ -7,8 +7,8 @@ import monocle.macros.Lenses
 
 @Lenses
 case class RootModel(
-                      target: Target
-                    )
+  target: Target
+)
 
 trait AppState { self: IOApp =>
   val rootModel = Model[IO, RootModel](RootModel(Target.M81))
