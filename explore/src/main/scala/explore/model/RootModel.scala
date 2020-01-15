@@ -10,6 +10,9 @@ case class RootModel(
   target: Target
 )
 
-trait AppState { self: IOApp =>
-  val rootModel = Model[IO, RootModel](RootModel(Target.M81))
+trait AppState {
+  protected implicit val concurrentEffectIO: ConcurrentEffect[IO] = implicitly[ConcurrentEffect[IO]]
+  protected implicit val timerIO: Timer[IO] = implicitly[Timer[IO]]
+
+  lazy val rootModel = Model[IO, RootModel](RootModel(Target.M81))
 }
