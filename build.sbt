@@ -70,7 +70,7 @@ lazy val commonSettings = gspScalaJsSettings ++ Seq(
     "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.1",
     "com.github.julien-truffaut" %%% "monocle-core" % "2.0.0",
     "com.github.julien-truffaut" %%% "monocle-macro" % "2.0.0",
-    "com.rpiaggio" %%% "crystal" % "0.0.10"
+    "com.rpiaggio" %%% "crystal" % "0.0.13"
   ),
   scalacOptions += "-Ymacro-annotations"
 )

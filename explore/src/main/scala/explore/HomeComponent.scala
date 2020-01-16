@@ -9,10 +9,12 @@ import japgolly.scalajs.react.raw.JsNumber
 import japgolly.scalajs.react.vdom.html_<^._
 import react.gridlayout._
 import react.sizeme._
+import scala.scalajs.js
+import model._
 
 object HomeComponent {
 
-  val layoutLg: Layout = Layout(
+  private val layoutLg: Layout = Layout(
     List(
       LayoutItem(x = 0, y = 0, w  = 6, h  = 9, i = "tpe"),
       LayoutItem(x = 6, y = 0, w  = 6, h  = 9, i = "coords"),
@@ -20,7 +22,7 @@ object HomeComponent {
     )
   )
 
-  val layoutMd: Layout = Layout(
+  private val layoutMd: Layout = Layout(
     List(
       LayoutItem(x = 0, y = 0, w = 5, h  = 5, i = "tpe"),
       LayoutItem(x = 6, y = 0, w = 5, h  = 5, i = "coords"),
@@ -28,7 +30,7 @@ object HomeComponent {
     )
   )
 
-  val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
+  private val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
     Map(
       (BreakpointName.lg, (1200, 12, layoutLg)),
       (BreakpointName.md, (996, 10, layoutMd))
@@ -36,31 +38,39 @@ object HomeComponent {
       // (BreakpointName.xs, (480, 6, layout))
     )
 
+  private val targetFlow = Views.target.flow
+
   val component =
     ScalaComponent
       .builder[Unit]("Home")
       .initialState(0)
-      .renderPS { (_, _, i) =>
+      .renderPS { (_, _, _) =>
         <.div(
           ^.cls := "rgl-area",
           SizeMe() { s =>
             <.div(
-              ResponsiveReactGridLayout(
-                s.width,
-                margin           = (5: JsNumber, 5: JsNumber),
-                containerPadding = (5: JsNumber, 5: JsNumber),
-                className        = "layout",
-                rowHeight        = 30,
-                draggableHandle  = ".tileTitle",
-                onLayoutChange   = (a, b) => Callback.log(a.toString) *> Callback.log(b.toString),
-                layouts          = layouts
-              )(
-                <.div(^.key := "tpe",
-                      ^.cls := "tile",
-                      Tile(Tile.Props("Conditions"), Conditions())),
-                <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),
-                <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), Tpe(i)))
-              )
+              TagMod.unless(js.isUndefined(s.width))(
+                ResponsiveReactGridLayout(
+                  s.width,
+                  margin           = (5: JsNumber, 5: JsNumber),
+                  containerPadding = (5: JsNumber, 5: JsNumber),
+                  className        = "layout",
+                  rowHeight        = 30,
+                  draggableHandle  = ".tileTitle",
+                  onLayoutChange   = (a, b) => Callback.log(a.toString) *> Callback.log(b.toString),
+                  layouts          = layouts
+                )(
+                  <.div(^.key := "tpe",
+                        ^.cls := "tile",
+                        Tile(Tile.Props("Conditions"), Conditions())),
+                  <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),                  
+                  <.div(^.key := "doc",    ^.cls := "tile", 
+                    Tile(Tile.Props("Target Position"), 
+                      targetFlow(targetOpt => <.div(targetOpt.whenDefined(target => Tpe(target))))
+                    )
+                  )
+                )
+              )  
             )
           }
         )
