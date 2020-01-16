@@ -14,7 +14,7 @@ import model._
 
 object HomeComponent {
 
-  val layoutLg: Layout = Layout(
+  private val layoutLg: Layout = Layout(
     List(
       LayoutItem(x = 0, y = 0, w  = 6, h  = 9, i = "tpe"),
       LayoutItem(x = 6, y = 0, w  = 6, h  = 9, i = "coords"),
@@ -22,7 +22,7 @@ object HomeComponent {
     )
   )
 
-  val layoutMd: Layout = Layout(
+  private val layoutMd: Layout = Layout(
     List(
       LayoutItem(x = 0, y = 0, w = 5, h  = 5, i = "tpe"),
       LayoutItem(x = 6, y = 0, w = 5, h  = 5, i = "coords"),
@@ -30,13 +30,15 @@ object HomeComponent {
     )
   )
 
-  val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
+  private val layouts: Map[BreakpointName, (JsNumber, JsNumber, Layout)] =
     Map(
       (BreakpointName.lg, (1200, 12, layoutLg)),
       (BreakpointName.md, (996, 10, layoutMd))
       // (BreakpointName.sm, (768, 8, layout)),
       // (BreakpointName.xs, (480, 6, layout))
     )
+
+  private val targetFlow = Views.target.flow
 
   val component =
     ScalaComponent
@@ -46,8 +48,8 @@ object HomeComponent {
         <.div(
           ^.cls := "rgl-area",
           SizeMe() { s =>
-            if(!js.isUndefined(s.width)) {
-              <.div(
+            <.div(
+              TagMod.unless(js.isUndefined(s.width))(
                 ResponsiveReactGridLayout(
                   s.width,
                   margin           = (5: JsNumber, 5: JsNumber),
@@ -62,16 +64,14 @@ object HomeComponent {
                         ^.cls := "tile",
                         Tile(Tile.Props("Conditions"), Conditions())),
                   <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),                  
-                    <.div(^.key := "doc",    ^.cls := "tile", Tile(Tile.Props("Target Position"), 
-                      Views.target.flow{ targetOpt =>
-                        Tpe(targetOpt.get)
-                      }
-                    ))                  
+                  <.div(^.key := "doc",    ^.cls := "tile", 
+                    Tile(Tile.Props("Target Position"), 
+                      targetFlow(targetOpt => <.div(targetOpt.whenDefined(target => Tpe(target))))
+                    )
+                  )
                 )
-              )
-            } else {
-              <.div
-            } 
+              )  
+            )
           }
         )
       }

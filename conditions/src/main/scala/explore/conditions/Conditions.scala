@@ -7,9 +7,11 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import react.semanticui.elements.button._
 import react.semanticui.colors._
+import react.common._
 // import crystal.react.io.implicits._
 import explore.model._
 import scala.scalajs.js
+import js.JSConverters._
 import js.UndefOr._
 import cats.effect._
 
@@ -17,6 +19,13 @@ object Conditions {
 
   @inline implicit def io2UndefOrCallback[A](io: IO[A]): js.UndefOr[Callback] = Callback {
     io.unsafeRunAsyncAndForget()
+  }
+
+  private val targetFlow = Views.target.flow
+
+  private def renderButton(forTarget: Target, selected: Option[Target]) = {
+    val color = selected.filter(_ == forTarget).map(_ => Blue).orUndefined
+    Button(onClick = Actions.TargetActionsIO.set(forTarget), color = color)(forTarget.toString)
   }
 
   private val component =
@@ -29,9 +38,10 @@ object Conditions {
             Button(color = Blue)("Button", "Btn"),
             Button("Button", "Dec")
           ),
-          <.div(
-            Button(onClick = Actions.TargetActionsIO.set(Target.M81)).withChildren(Seq("M81")),
-            Button(onClick = Actions.TargetActionsIO.set(Target.M51)).withChildren(Seq("M51"))
+          targetFlow(selected =>
+            <.div(
+              List(Target.M81, Target.M51).toTagMod(target => renderButton(target, selected))
+            )
           )
         )
       }
