@@ -26,7 +26,7 @@ object Tpe {
       .builder[Props]("TPE")
       .render { _ =>
         <.div(
-          ^.height := 28.pc,
+          ^.height := 28.pc
         )
       }
       .build

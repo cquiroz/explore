@@ -16,7 +16,7 @@ case class RootModel(
 )
 
 object AppState {
-  implicit private lazy val timerIO: Timer[IO] = cats.effect.IO.timer(global)
+  implicit private lazy val timerIO: Timer[IO]     = cats.effect.IO.timer(global)
   implicit private lazy val csIO: ContextShift[IO] = IO.contextShift(global)
 
   lazy val rootModel = Model[IO, RootModel](RootModel(Target.M81))

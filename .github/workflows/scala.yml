@@ -16,5 +16,3 @@ jobs:
         run: csbt scalafmtCheckAll
       - name: Run tests
         run: csbt headerCheck test:headerCheck test explore/fastOptJS::webpack
-        env:
-          SBT_OPTS: "-Xmx4096M -Xss2M -XX:ReservedCodeCacheSize=256M -XX:+TieredCompilation -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC"
