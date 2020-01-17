@@ -67,9 +67,9 @@ lazy val commonSettings = gspScalaJsSettings ++ Seq(
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
     "org.typelevel" %%% "cats-effect" % "2.0.0",
     "org.typelevel" %%% "cats-core" % "2.1.0",
-    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.1",
-    "com.github.julien-truffaut" %%% "monocle-core" % "2.0.0",
-    "com.github.julien-truffaut" %%% "monocle-macro" % "2.0.0",
+    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.2",
+    "com.github.julien-truffaut" %%% "monocle-core" % "2.0.1",
+    "com.github.julien-truffaut" %%% "monocle-macro" % "2.0.1",
     "com.rpiaggio" %%% "crystal" % "0.0.13"
   ),
   scalacOptions += "-Ymacro-annotations"
