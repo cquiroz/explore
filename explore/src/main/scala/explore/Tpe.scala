@@ -16,7 +16,7 @@ final case class Tpe(target: Target) extends ReactProps {
 object Tpe {
   type Props = Tpe
 
-  trait AladinOpts extends js.Object {
+  trait ViewOpts extends js.Object {
     var fov: Double
     var target: String
   }
@@ -26,29 +26,8 @@ object Tpe {
       .builder[Props]("TPE")
       .render { _ =>
         <.div(
-          ^.height := 28.pc,
-          ^.id := "tpe-aladin"
+          ^.height := 28.pc
         )
-      }
-      .componentDidMount { $ =>
-        Callback {
-          val opt = new AladinOpts() {
-            var fov    = 1
-            var target = $.props.target.toString
-          }
-          js.Dynamic.global.console.log(js.Dynamic.global.A)
-          js.Dynamic.global.A.aladin("#tpe-aladin", opt)
-        }
-      }
-      .componentDidUpdate { $ =>
-        Callback {
-          val opt = new AladinOpts() {
-            var fov    = 1
-            var target = $.currentProps.target.toString
-          }
-          js.Dynamic.global.console.log(js.Dynamic.global.A)
-          js.Dynamic.global.A.aladin("#tpe-aladin", opt)
-        }
       }
       .build
 }

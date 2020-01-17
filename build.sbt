@@ -28,11 +28,13 @@ lazy val root =
 lazy val common = project
   .in(file("common"))
   .settings(commonSettings: _*)
+  .settings(commonLibSettings: _*)
   .enablePlugins(ScalaJSBundlerPlugin)
 
 lazy val conditions = project
   .in(file("conditions"))
   .settings(commonSettings: _*)
+  .settings(commonLibSettings: _*)
   .settings(commonWDS: _*)
   .enablePlugins(ScalaJSBundlerPlugin)
   .dependsOn(common)
@@ -40,6 +42,7 @@ lazy val conditions = project
 lazy val explore: Project = project
   .in(file("explore"))
   .settings(commonSettings: _*)
+  .settings(commonLibSettings: _*)
   .settings(commonWDS: _*)
   .enablePlugins(ScalaJSBundlerPlugin)
   .settings(
@@ -61,18 +64,21 @@ lazy val commonSettings = gspScalaJsSettings ++ Seq(
   description := "Explore",
   homepage := Some(url("https://github.com/geminihlsw/explore")),
   licenses := Seq("BSD 3-Clause License" -> url("https://opensource.org/licenses/BSD-3-Clause")),
+  scalacOptions += "-Ymacro-annotations"
+)
+
+lazy val commonLibSettings = gspScalaJsSettings ++ Seq(
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core" % scalaJsReact,
     "com.github.japgolly.scalajs-react" %%% "extra" % scalaJsReact,
     "com.github.japgolly.scalajs-react" %%% "test" % scalaJsReact % Test,
     "org.typelevel" %%% "cats-effect" % "2.0.0",
     "org.typelevel" %%% "cats-core" % "2.1.0",
-    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.1",
-    "com.github.julien-truffaut" %%% "monocle-core" % "2.0.0",
-    "com.github.julien-truffaut" %%% "monocle-macro" % "2.0.0",
+    "io.github.cquiroz.react" %%% "react-semantic-ui" % "0.3.2",
+    "com.github.julien-truffaut" %%% "monocle-core" % "2.0.1",
+    "com.github.julien-truffaut" %%% "monocle-macro" % "2.0.1",
     "com.rpiaggio" %%% "crystal" % "0.0.13"
-  ),
-  scalacOptions += "-Ymacro-annotations"
+  )
 )
 
 lazy val commonWDS = Seq(
@@ -117,7 +123,6 @@ lazy val commonWDS = Seq(
   npmDependencies in Compile ++= Seq(
     "react" -> reactJS,
     "react-dom" -> reactJS,
-    "semantic-ui-less" -> SUI,
-    "aladin-lite" -> "0.0.4"
+    "semantic-ui-less" -> SUI
   )
 )

@@ -63,14 +63,18 @@ object HomeComponent {
                   <.div(^.key := "tpe",
                         ^.cls := "tile",
                         Tile(Tile.Props("Conditions"), Conditions())),
-                  <.div(^.key := "coords", ^.cls := "tile", Tile(Tile.Props("Coordinates"), Imag())),                  
-                  <.div(^.key := "doc",    ^.cls := "tile", 
-                    Tile(Tile.Props("Target Position"), 
-                      targetFlow(targetOpt => <.div(targetOpt.whenDefined(target => Tpe(target))))
-                    )
+                  <.div(^.key := "coords",
+                        ^.cls := "tile",
+                        Tile(Tile.Props("Coordinates"), Imag())),
+                  <.div(
+                    ^.key := "doc",
+                    ^.cls := "tile",
+                    Tile(Tile.Props("Target Position"),
+                         targetFlow(targetOpt => <.div(targetOpt.whenDefined(target => Tpe(target)))
+                         ))
                   )
                 )
-              )  
+              )
             )
           }
         )
